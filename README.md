@@ -1,1 +1,1 @@
-# heartlung-GAM-shiny
+# HeartLung-GAM-Shiny
