@@ -61,7 +61,7 @@ abpAnimationTimeUI <- function(id) {
               style = "background-color: white; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 10px;",
               tags$pre(HTML(
                 "gam_abp_total <- mgcv::bam(ABP ~ te(P_wave_index, insp_rel_index, time, fx = TRUE, 
-                bs = c('cc', 'cc', 'cr'), k = c(40, 30, 20)),
+                bs = c('cc', 'cc', 'cr'), k = c(20, 15, 10)),
                 data = pp_data(),
                 rho = 0.95,
                 discrete = TRUE,
@@ -144,7 +144,7 @@ abpAnimationTimeServer <- function(id, data_in) {
           incProgress(0.05, detail = "Fitting model...")
           gam_abp_total <- mgcv::bam(
             ABP ~ te(P_wave_index, insp_rel_index, time, fx = TRUE, 
-                     bs = c('cc', 'cc', 'cr'), k = c(40, 30, 20)),
+                     bs = c('cc', 'cc', 'cr'), k = c(20, 15, 10)),
             data = pp_data(),
             rho = 0.95,
             discrete = set_discrete,
