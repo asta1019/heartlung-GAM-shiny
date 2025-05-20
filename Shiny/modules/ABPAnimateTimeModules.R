@@ -61,7 +61,7 @@ abpAnimationTimeUI <- function(id) {
               style = "background-color: white; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 10px;",
               tags$pre(HTML(
                 "gam_abp_total <- mgcv::bam(ABP ~ te(P_wave_index, insp_rel_index, time, fx = TRUE, 
-                bs = c('cc', 'cc', 'cr'), k = c(20, 15, 10)),
+                bs = c('cc', 'cc', 'cr'), k = c(10, 10, 5)),
                 data = pp_data(),
                 rho = 0.95,
                 discrete = FALSE,
