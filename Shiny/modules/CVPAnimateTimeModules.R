@@ -126,6 +126,10 @@ cvpAnimationTimeServer <- function(id, data_in) {
       adjust_cvp_insp_index(cvp, qrs, insp)
     })
     
+    # -------------------------------
+    # GAM
+    # -------------------------------
+    
     # Reactive animation
     cvp_plot <- eventReactive(input$generate_animation, {
       req(cvp_data())
@@ -145,6 +149,10 @@ cvpAnimationTimeServer <- function(id, data_in) {
             discrete = set_discrete,
             nthreads = set_nthreads
           )
+          
+        # -------------------------------
+        # ANIMATIONS
+        # -------------------------------
           
           # Prepare prediction grid for animation
           incProgress(0.10, detail = "Preparing prediction grid...")
@@ -270,6 +278,10 @@ cvpAnimationTimeServer <- function(id, data_in) {
         )
       }
     )
+    
+    # -------------------------------
+    # DOWNLOAD HANDLERS
+    # -------------------------------
     
     # Download and open in Chrome
     output$download_chrome <- downloadHandler(

@@ -121,6 +121,10 @@ cvpAnimationServer <- function(id, data_in) {
       adjusted_cvp
     })
     
+    # -------------------------------
+    # GAM
+    # -------------------------------
+    
     # Animation generation triggered by button
     gam_anim <- eventReactive(input$generate_gam_animation, {
       req(cvp_data())
@@ -140,6 +144,10 @@ cvpAnimationServer <- function(id, data_in) {
           discrete = set_discrete,
           nthreads = set_nthreads
         )
+        
+      # -------------------------------
+      # ANIMATIONS
+      # -------------------------------
         
         # Create prediction grid
         incProgress(0.2, detail = "Preparing prediction grid...")
@@ -235,6 +243,10 @@ cvpAnimationServer <- function(id, data_in) {
         ))
       }
     )
+    
+    # -------------------------------
+    # DOWNLOAD HANDLERS
+    # -------------------------------
     
     # Download and open in Chrome
     output$download_gam_chrome <- downloadHandler(

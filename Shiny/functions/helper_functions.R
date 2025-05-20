@@ -1,9 +1,9 @@
-# ===================================
+# ===================================================
 # Functions: helper_functions.R
-# ===================================
-# ----------------------------------------------------------------------------------
+# ===================================================
+# ---------------------------------------------------
 # Calculate Beats Pr. Minute
-# ----------------------------------------------------------------------------------
+# ---------------------------------------------------
 calculate_bpm <- function(beats) {
   # Calculate inter-beat intervals (IBI) in seconds, by finding time differences between systolic times
   ibi <- diff(beats$time_systole)
@@ -11,14 +11,14 @@ calculate_bpm <- function(beats) {
   # Calculate average IBI
   avg_ibi <- mean(ibi, na.rm = TRUE)
   
-  # Calculate BPM (beats per minute) as 60 / average IBI
+  # Calculate beats per minute (BPM) as 60 / average IBI
   bpm <- 60 / avg_ibi
   return(bpm)
 }
 
-# ----------------------------------------------------------------------------------
+# ---------------------------------------------------
 # adjust R-peaks
-# ----------------------------------------------------------------------------------
+# ---------------------------------------------------
 correct_rpeaks <- function(data) {
   # Initial QRS sample identification
   data$sample_cvp$qrs$samples <- sapply(data$sample_cvp$qrs$time, function(qrs_time) {
@@ -37,7 +37,7 @@ correct_rpeaks <- function(data) {
     end <- min(nrow(data$sample_cvp$ecg), sample + 20)
     qrs_segment <- data$sample_cvp$ecg$ECG_II[start:end]
     max_index <- which.max(qrs_segment)
-    data$sample_cvp$ecg$time[start + max_index - 1]  # -1 because which.max returns 1-based index. Gives the Global korrect position 
+    data$sample_cvp$ecg$time[start + max_index - 1]  # -1 because which.max returns 1-based index. Gives the Global correct position 
   })
   
   # Replace qrs$time with correctedRpeak_time
@@ -61,9 +61,9 @@ correct_rpeaks <- function(data) {
 }
 
 
-# ----------------------------------------------------------------------------------
+# ---------------------------------------------------
 # Function: adjusted_insp_index.R for cvp module
-# ----------------------------------------------------------------------------------
+# ---------------------------------------------------
 adjust_cvp_insp_index <- function(cvp, qrs_times, insp_start_times, PQ_interval = 0.150) {
   # Add initial timing indexes based on cardiac and respiratory events
   cvp_with_index <- cvp %>%
@@ -86,9 +86,9 @@ adjust_cvp_insp_index <- function(cvp, qrs_times, insp_start_times, PQ_interval 
 }
 
 
-# ----------------------------------------------------------------------------------
+# ---------------------------------------------------
 # Function: adjusted_insp_index.R for abp module
-# ----------------------------------------------------------------------------------
+# ---------------------------------------------------
 
 adjust_abp_insp_index <- function(abp, cvp, qrs_times, insp_start_times, PQ_interval = 0.150) {
   # Add time since last P-wave and inspiration start to ABP data

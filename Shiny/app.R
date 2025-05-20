@@ -2,7 +2,7 @@
 # app.R
 # =============================================
 # The app file is the central place where you place combine all your modules and launch the full Shiny app by clicking "Run App" in Rstudio. 
-#
+
 # ---------------------------------------------
 # Source packages, functions, modules etc.
 # ---------------------------------------------
@@ -126,9 +126,9 @@ ui <- dashboardPage(skin = "black",
                     )
 )
 
-# --------------------
+# ---------------------------------------------
 # Server-side logic
-# --------------------
+# ---------------------------------------------
 server <- function(input, output, session) {
   data_rv <- reactiveValues(data = NULL)
   
@@ -155,7 +155,7 @@ server <- function(input, output, session) {
   abpAnimationTimeServer("animationABP2", data_in = clean_cvp)
 }
 
-# ---------------------------
+# ---------------------------------------------
 # Run the application
-# ---------------------------
+# ---------------------------------------------
 shinyApp(ui, server)

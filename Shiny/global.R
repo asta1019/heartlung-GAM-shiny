@@ -1,9 +1,9 @@
-# ============
+# =========================================================
 # global.R
-# ============
-# ---------------------------
+# =========================================================
+# ---------------------------------------------------------
 # Load required libraries
-# ---------------------------
+# ---------------------------------------------------------
 # Core Frameworks and UI Tools
 library(shiny)                     # Core framework for building interactive web applications in R
 library(shinydashboard)            # Layout and UI tools for dashboard-style Shiny applications

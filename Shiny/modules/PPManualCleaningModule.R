@@ -13,7 +13,7 @@ ManualCleanPPUI <- function(id) {
     
     fluidRow(
       column(
-        width = 3, #Left side
+        width = 3,
         br(),
         sliderInput(ns("time_window"), "Time window (seconds)", 
                     min = 0, max = 10, value = c(0, 10), step = 1),
@@ -26,7 +26,7 @@ ManualCleanPPUI <- function(id) {
         )
       ),
       column(
-        width = 9, # Right side
+        width = 9, 
         tags$div(
           style = "margin-top: 28px;",
           tags$h4("Pulse Pressure Over Time with Highlighted Excluded Data Points"),

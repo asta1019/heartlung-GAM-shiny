@@ -233,16 +233,17 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
       adjust_cvp_insp_index(cvp, qrs, insp)
     })
     
-    #########################################################
-    #observe({
-    #  cores <- parallel::detectCores()
-    #  nthreads <- max(1, floor(cores * 0.75))
-    #  
-    #  # Print til R-konsollen (serverens konsol)
-    #  print(paste("Antal kerner fundet:", cores))
-    #  print(paste("Bruger nthreads sat til:", nthreads))
-    #})
-    #########################################################
+    ############################################################
+    # Check the cores on your computer to decide ntheads in GAM
+    # observe({
+    #   cores <- parallel::detectCores()
+    #   nthreads <- max(1, floor(cores * 0.75))
+    #   
+    #   # Print to the R console (the server's console)
+    #   print(paste("Number of cores found:", cores))
+    #   print(paste("Number of threads set to use:", nthreads))
+    # })
+    ############################################################
     
     # Filtered by the sliders 
     cvp_data <- reactive({

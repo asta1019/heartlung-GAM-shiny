@@ -122,6 +122,10 @@ abpAnimationServer <- function(id, data_in) {
       adjusted_abp
     })
     
+    # -------------------------------
+    # GAM
+    # -------------------------------
+    
     # Animation generation triggered by button
     gam_anim <- eventReactive(input$generate_gam_animation, {
       req(pp_data())
@@ -141,6 +145,10 @@ abpAnimationServer <- function(id, data_in) {
           discrete = set_discrete,
           nthreads = set_nthreads
         )
+        
+      # -------------------------------
+      # ANIMATIONS
+      # -------------------------------
         
         # Create prediction grid
         incProgress(0.2, detail = "Preparing prediction grid...")
@@ -232,6 +240,10 @@ abpAnimationServer <- function(id, data_in) {
         ))
       }
     )
+    
+    # -------------------------------
+    # DOWNLOAD HANDLERS
+    # -------------------------------
     
     # Download and open in Chrome
     output$download_gam_chrome <- downloadHandler(

@@ -127,6 +127,10 @@ abpAnimationTimeServer <- function(id, data_in) {
       )
     })
     
+    # -------------------------------
+    # GAM
+    # -------------------------------
+    
     # Reactive animation
     abp_plot <- eventReactive(input$generate_animation, {
       req(pp_data())
@@ -146,6 +150,10 @@ abpAnimationTimeServer <- function(id, data_in) {
             discrete = set_discrete,
             nthreads = set_nthreads
           )
+          
+        # -------------------------------
+        # ANIMATIONS
+        # -------------------------------
           
           # Prepare prediction grid for animation
           incProgress(0.10, detail = "Preparing prediction grid...")
@@ -273,6 +281,10 @@ abpAnimationTimeServer <- function(id, data_in) {
         )
       }
     )
+    
+    # -------------------------------
+    # DOWNLOAD HANDLERS
+    # -------------------------------
     
     # Download and open in Chrome
     output$download_chrome <- downloadHandler(

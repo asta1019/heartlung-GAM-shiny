@@ -63,7 +63,7 @@ ppGAMPlotModuleUI <- function(id) {
       column(12,
              tags$h4("GAM model", style = "margin-bottom: 10px;"),
              div(
-               style = "background-color: white; padding: 5px 10px 10px 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 15px;",
+               style = "background-color: white; padding: 10px 10px 10px 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 15px;",
                withMathJax(
                  div(style = "text-align: center; font-size: 14px;",
                      '\\( PP \\sim s(insp\\_rel\\_index) + s(time) + \\varepsilon \\)'
