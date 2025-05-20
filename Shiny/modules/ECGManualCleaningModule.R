@@ -93,6 +93,10 @@ CleanECGModuleServer <- function(id, data_in) {
       peaks
     })
     
+    # -------------------------------
+    # DATATABLE
+    # -------------------------------
+    
     # DataTable with amplitude (filtered by time range)
     output$datatable <- renderDT({
       req(rpeaks_with_amplitude(), input$x_range)
@@ -157,6 +161,10 @@ CleanECGModuleServer <- function(id, data_in) {
       
       peaks
     })
+    
+    # -------------------------------
+    # PLOTS
+    # -------------------------------
     
     # Plot ECG signal 
     output$ecgPlot <- renderPlotly({

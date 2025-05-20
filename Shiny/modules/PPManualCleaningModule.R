@@ -78,6 +78,10 @@ ManualCleanPPServer <- function(id, data_in) {
       )
     })
     
+    # -------------------------------
+    # DATATABLE
+    # -------------------------------
+    
     # Render datatable
     output$beats_table <- renderDT({
       req(manual_rv$beats)
@@ -104,6 +108,10 @@ ManualCleanPPServer <- function(id, data_in) {
       manual_rv$beats <- manual_rv$undo_beats
       manual_rv$undo_beats <- NULL
     })
+    
+    # -------------------------------
+    # PLOTS
+    # -------------------------------
     
     # Plot Pulse Pressure (PP) over time with a highlighted time window and selected points
     output$PP_plot <- renderPlotly({

@@ -131,6 +131,10 @@ CleanPPModuleServer <- function(id, data_in) {
       )
     })
     
+    # -------------------------------
+    # PLOTS
+    # -------------------------------
+    
     #Pulse Pressure over time with highlighted outliers
     output$PP_plot <- renderPlotly({
       req(beats_rv$selected_beats, beats_rv$cleaned_beats, input$time_window)
