@@ -64,7 +64,7 @@ abpAnimationTimeUI <- function(id) {
                 bs = c('cc', 'cc', 'cr'), k = c(20, 15, 10)),
                 data = pp_data(),
                 rho = 0.95,
-                discrete = TRUE,
+                discrete = FALSE,
                 nthreads = 6)"
               ))
             )
@@ -144,7 +144,7 @@ abpAnimationTimeServer <- function(id, data_in) {
           incProgress(0.05, detail = "Fitting model...")
           gam_abp_total <- mgcv::bam(
             ABP ~ te(P_wave_index, insp_rel_index, time, fx = TRUE, 
-                     bs = c('cc', 'cc', 'cr'), k = c(20, 15, 10)),
+                     bs = c('cc', 'cc', 'cr'), k = c(10, 10, 5)),
             data = pp_data(),
             rho = 0.95,
             discrete = set_discrete,

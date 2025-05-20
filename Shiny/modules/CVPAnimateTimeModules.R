@@ -61,10 +61,10 @@ cvpAnimationTimeUI <- function(id) {
               style = "background-color: white; padding: 15px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-top: 10px;",
               tags$pre(HTML(
                 "gam_cvp_total <- mgcv::bam(CVP ~ te(P_wave_index, insp_rel_index, time, fx = TRUE, 
-                bs = c('cc', 'cc', 'cr'), k = c(20, 15, 10)),
+                bs = c('cc', 'cc', 'cr'), k = c(10, 10, 5)),
                 data = cvp_data(),
                 rho = 0.95,
-                discrete = TRUE,
+                discrete = FALSE,
                 nthreads = 6)"
               ))
             )
@@ -111,7 +111,7 @@ cvpAnimationTimeServer <- function(id, data_in) {
     shinyjs::disable("download_gam_chrome")
     
     # Configuration flags for GAM fitting
-    set_discrete <- TRUE    # Use discrete BAM for speed
+    set_discrete <- FALSE   # Use discrete BAM for speed
     set_nthreads <- 6       # Number of CPU threads
     
     # Reactive expression to generate adjusted CVP data
@@ -143,7 +143,7 @@ cvpAnimationTimeServer <- function(id, data_in) {
           incProgress(0.05, detail = "Fitting model...")
           gam_cvp_total <- mgcv::bam(
             CVP ~ te(P_wave_index, insp_rel_index, time, fx = TRUE, 
-                     bs = c('cc', 'cc', 'cr'), k = c(20, 15, 10)),
+                     bs = c('cc', 'cc', 'cr'), k = c(10, 10, 5)),
             data = cvp_data(),
             rho = 0.95,
             discrete = set_discrete,
