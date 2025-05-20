@@ -111,7 +111,7 @@ cvpAnimationTimeServer <- function(id, data_in) {
     shinyjs::disable("download_gam_chrome")
     
     # Configuration flags for GAM fitting
-    set_discrete <- FALSE   # Use discrete BAM for speed
+    set_discrete <- TRUE    # Use discrete BAM for speed
     set_nthreads <- 6       # Number of CPU threads
     
     # Reactive expression to generate adjusted CVP data
