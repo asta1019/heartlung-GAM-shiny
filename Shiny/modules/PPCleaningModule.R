@@ -43,7 +43,7 @@ CleanPPModuleUI <- function(id) {
                    )
                  ),
                  
-                 tags$h4("Pulse Pressure Over Time with Highlighted Excluded Data Points"),
+                 tags$h4("Pulse Pressure Over Time with Highlighted Data Points to Exclude"),
                  plotlyOutput(ns("PP_plot"), height = "300px"),
                  
                  tags$h4("ABP with Beat Markers"),
