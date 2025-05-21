@@ -18,7 +18,7 @@ CleanECGModuleUI <- function(id) {
         sliderInput(ns("x_range"), "Time window (seconds)", 
                     min = 0, max = 10, value = c(0, 10), step = 1), 
         DTOutput(ns("datatable")),
-        div(style = "display: flex; gap: 5px;",
+        div(style = "display: flex; gap: 5px; padding-top: 5px;",
             actionButton(ns("remove_selected"), "Remove selected peaks", width = "100%"),
             actionButton(ns("undo_remove"), "Undo latest removal", width = "100%")
         )
@@ -27,7 +27,7 @@ CleanECGModuleUI <- function(id) {
       column(
         width = 9,
         tags$div(
-          style = "margin-top: 28px;",
+          style = "margin-top: 28px; margin-left: 10px;",
           h4("ECG Signal with R-peak Markers"),
           plotlyOutput(ns("ecgPlot"), height = "300px"),
           h4("ECG R-R Interval"),

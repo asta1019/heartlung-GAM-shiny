@@ -18,7 +18,7 @@ ManualCleanPPUI <- function(id) {
         sliderInput(ns("time_window"), "Time window (seconds)", 
                     min = 0, max = 10, value = c(0, 10), step = 1),
         DTOutput(ns("beats_table")),
-        div(style = "display: flex; gap: 5px;",
+        div(style = "display: flex; gap: 5px; padding-top: 5px;",
             actionButton(ns("remove_selected"), "Remove selected beats", 
                          width = "100%"),
             actionButton(ns("undo_remove"), "Undo latest removal", 
@@ -28,7 +28,7 @@ ManualCleanPPUI <- function(id) {
       column(
         width = 9, 
         tags$div(
-          style = "margin-top: 28px;",
+          style = "margin-top: 28px; margin-left: 10px;",
           tags$h4("Pulse Pressure Over Time with Highlighted Data Points to Excluded"),
           plotlyOutput(ns("PP_plot"), height = "300px"),
           tags$h4("ABP with Beat Markers"),
