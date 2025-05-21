@@ -29,7 +29,7 @@ ManualCleanPPUI <- function(id) {
         width = 9, 
         tags$div(
           style = "margin-top: 28px; margin-left: 10px;",
-          tags$h4("Pulse Pressure Over Time with Highlighted Data Points to Excluded"),
+          tags$h4("Pulse Pressure Over Time with Highlighted Data Points to Exclude"),
           plotlyOutput(ns("PP_plot"), height = "300px"),
           tags$h4("ABP with Beat Markers"),
           plotlyOutput(ns("ABP_plot"), height = "300px"))
