@@ -186,7 +186,7 @@ ppGAMPlotModuleServer <- function(id, updated_data) {
     PP_gam <- reactive({
       req(PP_data())
       gam(
-        PP ~ s(insp_rel_index, k = 30, bs = "cc") + s(time, bs = "cr"),
+        PP ~ s(insp_rel_index, k = 10, bs = "cc") + s(time, k = 10, bs = "cr"),
         knots = list(insp_rel_index = c(0, 1)),
         method = "REML",
         data = PP_data()
