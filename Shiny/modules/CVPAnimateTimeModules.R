@@ -203,12 +203,30 @@ cvpAnimationTimeServer <- function(id, data_in) {
                       aes(xmin = 0, xmax = 1, ymin = -Inf, ymax = Inf),
                       fill = "blue", alpha = 0.1, inherit.aes = FALSE) +
             scale_color_viridis_c(option = "turbo") +
-            labs(x = "Position in cardiac cycle (Relative to P wave)", y = "CVP [mmHg]") +
+            labs(
+              title = paste0(
+                "Time: {frame_time}<br><br>",
+                "<span style='font-size:11pt;'>",
+                "The CVP waveform for an individual heart beat and its<br>", 
+                "dependence on the respiratory cycle. The animation shows<br>", 
+                "how these change with interventions over time.",
+                "</span>"
+              ),
+              x = "Position in cardiac cycle (Relative to P wave)", 
+              y = "CVP [mmHg]"
+            )+
             transition_time(time) +
             ease_aes('linear') +
-            ggtitle("Time: {sprintf('%.0f', frame_time)} \nAnimation A: CVP") +
-            theme(plot.margin = unit(c(1, 0.2, 0.2, 0.2), "cm"))
+            theme_minimal() +
+            theme(
+              plot.title = ggtext::element_markdown(size = 14, hjust = 0, lineheight = 1),
+              plot.margin = unit(c(0.5, 0.2, 0.2, 0.2), "cm")
+            )
           
+          
+          
+          
+
           # Plot B: Partial effect of time in CVP
           incProgress(0.10, detail = "Rendering plot B...")
           time_effect <- gratia::fitted_values(gam_cvp_total, data = new_data)
@@ -222,11 +240,16 @@ cvpAnimationTimeServer <- function(id, data_in) {
                       aes(xmin = start, xmax = end, ymin = -Inf, ymax = Inf),
                       fill = "blue", alpha = 0.2) +
             geom_vline(data = states_B, aes(xintercept = state), color = "red") +
-            ylab("Partial effect of time in CVP") +
-            xlab("Time [s]") +
+            labs(
+              x = "Time [s]",
+              y = "Partial effect of time in CVP",
+              subtitle = "The overall change in CVP level and an \nindication (blue area) of when an intervention has occurred."
+            ) +
             transition_states(state, transition_length = 0, state_length = 1, wrap = FALSE) +
-            ggtitle("Animation B: Partial effect of time in CVP") +
-            theme(plot.margin = unit(c(1, 0.2, 0.2, 0.2), "cm"))
+            theme(
+              plot.title = element_blank(),
+              plot.subtitle = element_text(size = 11, hjust = 0, lineheight = 1),
+              plot.margin = unit(c(2.5, 0.2, 0.2, 0.2), "cm"))
           
           # Render both animations (A and B) 
           incProgress(0.10, detail = "Rendering animations...")
@@ -286,7 +309,7 @@ cvpAnimationTimeServer <- function(id, data_in) {
     # Download and open in Chrome
     output$download_chrome <- downloadHandler(
       filename = function() {
-        paste0("cvp_animation_", Sys.Date(), ".mp4")
+        paste0("CVP_gam_animation_time_", Sys.Date(), ".mp4")
       },
       content = function(file) {
         tmpgif <- tempfile(fileext = ".gif")

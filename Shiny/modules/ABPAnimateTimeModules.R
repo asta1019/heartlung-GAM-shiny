@@ -203,12 +203,26 @@ abpAnimationTimeServer <- function(id, data_in) {
             geom_rect(data = fluid_rect_data,
                       aes(xmin = 0, xmax = 1, ymin = -Inf, ymax = Inf),
                       fill = "blue", alpha = 0.1, inherit.aes = FALSE) +
-            scale_color_viridis_c(option = "turbo") +
-            labs(x = "Position in cardiac cycle (relative to P wave)", y = "ABP [mmHg]") +
+            scale_color_viridis_c(option = "turbo") +labs(
+              title = paste0(
+                "Time: {frame_time}<br><br>",
+                "<span style='font-size:11pt;'>",
+                "The ABP waveform for an individual heart beat and its<br>", 
+                "dependence on the respiratory cycle. The animation shows<br>", 
+                "how these change with interventions over time.",
+                "</span>"
+              ),
+              x = "Position in cardiac cycle (Relative to P wave)", 
+              y = "ABP [mmHg]"
+            )+
             transition_time(time) +
             ease_aes('linear') +
-            ggtitle("Time: {sprintf('%.0f', frame_time)} \nAnimation A: ABP") +
-            theme(plot.margin = unit(c(1, 0.2, 0.2, 0.2), "cm"))
+            theme_minimal() +
+            theme(
+              plot.title = ggtext::element_markdown(size = 14, hjust = 0, lineheight = 1),
+              plot.margin = unit(c(0.5, 0.2, 0.2, 0.2), "cm")
+            )
+          
           
           # Plot B
           incProgress(0.10, detail = "Laver plot B...")
@@ -224,11 +238,13 @@ abpAnimationTimeServer <- function(id, data_in) {
                       aes(xmin = start, xmax = end, ymin = -Inf, ymax = Inf),
                       fill = "blue", alpha = 0.2) +
             geom_vline(data = states_B, aes(xintercept = state), color = "red") +
-            ylab("Partial effect of time in ABP") +
-            xlab("Time [s]") +
+            labs(
+              x = "Time [s]",
+              y = "Partial effect of time in ABP",
+              subtitle = "The overall change in ABP level and an \nindication (blue area) of when an intervention has occurred."
+            ) +
             transition_states(state, transition_length = 0, state_length = 1, wrap = FALSE) +
-            ggtitle("Animation B: Partial effect of time in ABP") +
-            theme(plot.margin = unit(c(1, 0.2, 0.2, 0.2), "cm"))
+            theme(plot.margin = unit(c(2.5, 0.2, 0.2, 0.2), "cm"))
           
           # Render both animations (A and B) 
           incProgress(0.10, detail = "Renderer animationer...")
@@ -289,7 +305,7 @@ abpAnimationTimeServer <- function(id, data_in) {
     # Download and open in Chrome
     output$download_chrome <- downloadHandler(
       filename = function() {
-        paste0("abp_animation_", Sys.Date(), ".mp4")
+        paste0("ABP_gam_animation_time_", Sys.Date(), ".mp4")
       },
       content = function(file) {
         tmpgif <- tempfile(fileext = ".gif")

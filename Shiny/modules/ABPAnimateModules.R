@@ -248,7 +248,7 @@ abpAnimationServer <- function(id, data_in) {
     # Download and open in Chrome
     output$download_gam_chrome <- downloadHandler(
       filename = function() {
-        paste0("gam_animation_", Sys.Date(), ".mp4")
+        paste0("ABP_gam_animation_", Sys.Date(), ".mp4")
       },
       content = function(file) {
         tmpgif <- tempfile(fileext = ".gif")
