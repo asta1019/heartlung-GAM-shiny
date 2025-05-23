@@ -276,10 +276,14 @@ abpAnimationTimeServer <- function(id, data_in) {
       list(src = tmpfile, contentType = "image/gif")
     }, deleteFile = TRUE)
     
+    # -------------------------------
+    # DOWNLOAD HANDLERS
+    # -------------------------------
+    
     # Download animation as MP4
     output$download_mp4 <- downloadHandler(
       filename = function() {
-        paste0("abp_animation_", Sys.Date(), ".mp4")
+        paste0("ABP_gam_animation_time_", Sys.Date(), ".mp4")
       },
       content = function(file) {
         tmpgif <- tempfile(fileext = ".gif")
@@ -297,10 +301,6 @@ abpAnimationTimeServer <- function(id, data_in) {
         )
       }
     )
-    
-    # -------------------------------
-    # DOWNLOAD HANDLERS
-    # -------------------------------
     
     # Download and open in Chrome
     output$download_chrome <- downloadHandler(

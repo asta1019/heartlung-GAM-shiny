@@ -226,10 +226,14 @@ cvpAnimationServer <- function(id, data_in) {
       list(src = tmpfile, contentType = "image/gif")
     }, deleteFile = TRUE)
     
+    # -------------------------------
+    # DOWNLOAD HANDLERS
+    # -------------------------------
+    
     # Provide download as MP4
     output$download_gam_mp4 <- downloadHandler(
       filename = function() {
-        paste0("gam_animation_", Sys.Date(), ".mp4")
+        paste0("CVP_gam_animation_", Sys.Date(), ".mp4")
       },
       content = function(file) {
         tmpgif <- tempfile(fileext = ".gif")
@@ -243,10 +247,6 @@ cvpAnimationServer <- function(id, data_in) {
         ))
       }
     )
-    
-    # -------------------------------
-    # DOWNLOAD HANDLERS
-    # -------------------------------
     
     # Download and open in Chrome
     output$download_gam_chrome <- downloadHandler(
