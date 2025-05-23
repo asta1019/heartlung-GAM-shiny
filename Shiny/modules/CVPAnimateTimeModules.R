@@ -205,11 +205,11 @@ cvpAnimationTimeServer <- function(id, data_in) {
             scale_color_viridis_c(option = "turbo") +
             labs(
               title = paste0(
-                "Time: {frame_time}<br><br>",
+                "Time: {sprintf('%.0f', frame_time)}<br>",
                 "<span style='font-size:11pt;'>",
                 "The CVP waveform for an individual heart beat and its<br>", 
-                "dependence on the respiratory cycle. The animation shows<br>", 
-                "how these change with interventions over time.",
+                "dependence on the respiratory cycle. The animation<br>", 
+                "shows how these change with interventions over time.",
                 "</span>"
               ),
               x = "Position in cardiac cycle (Relative to P wave)", 
@@ -243,13 +243,13 @@ cvpAnimationTimeServer <- function(id, data_in) {
             labs(
               x = "Time [s]",
               y = "Partial effect of time in CVP",
-              subtitle = "The overall change in CVP level and an \nindication (blue area) of when an intervention has occurred."
+              subtitle = "The overall change in CVP level and an indication (blue area) of when an \nintervention has occurred."
             ) +
             transition_states(state, transition_length = 0, state_length = 1, wrap = FALSE) +
             theme(
               plot.title = element_blank(),
               plot.subtitle = element_text(size = 11, hjust = 0, lineheight = 1),
-              plot.margin = unit(c(2.5, 0.2, 0.2, 0.2), "cm"))
+              plot.margin = unit(c(2.0, 0.2, 0.2, 0.2), "cm"))
           
           # Render both animations (A and B) 
           incProgress(0.10, detail = "Rendering animations...")
