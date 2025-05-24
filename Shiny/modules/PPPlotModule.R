@@ -28,7 +28,7 @@ ppGAMPlotModuleUI <- function(id) {
     fluidRow(
       column(3,
              sliderInput(ns("time_range"),
-                         "Time window (seconds)",
+                         "Time window corresponding to all plots (seconds)",
                          min = 0, max = 10, value = c(0, 10), step = 1, width = "100%"
              )
       ),
@@ -275,13 +275,15 @@ ppGAMPlotModuleServer <- function(id, updated_data) {
     # Plot 3: GAM smooth over respiration phase
     output$gamPlot3 <- renderPlot({
       req(PP_gam())
-      draw(PP_gam(), select = 1, residuals = TRUE, rug = FALSE)
+      draw(PP_gam(), select = 1, residuals = TRUE, rug = FALSE) + 
+        labs(title = "Position in the Respiratory Cycle", x = "Position i respiratory cycle (relative to Inspiration Start)", y = "Partial Effect on PP [mmHg]") 
     })
     
     # Plot 4: GAM smooth over time
     output$gamPlot4 <- renderPlot({
       req(PP_gam())
-      draw(PP_gam(), select = 2, residuals = TRUE, rug = FALSE)
+      draw(PP_gam(), select = 2, residuals = TRUE, rug = FALSE) +
+        labs(title = "Partial Effect of Time", x = "Time [s]", y = "Partial Effect on PP [mmHg]")
     })
     
     # -------------------------------

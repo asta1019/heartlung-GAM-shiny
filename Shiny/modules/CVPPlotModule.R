@@ -440,7 +440,7 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
       y_vals <- predict(model, newdata = new_data, type = "terms")[, "s(P_wave_index)"]
       gratia::draw(model, select = 1, residuals = TRUE, rug = FALSE) +
         theme_minimal() +
-        labs(title = "Position in the Cardiac Cycle", x = "Index to QRS (relative)", y = "Partial CVP [mmHg]") +
+        labs(title = "Position in the Cardiac Cycle", x = "Position in cardiac cycle (relative to P wave)", y = "Partial Effect on CVP [mmHg]") +
         geom_point(aes(x = new_data$P_wave_index[1], y = y_vals[1] - 0.15), shape = 16, size = 3) +
         geom_point(aes(x = new_data$P_wave_index[2], y = y_vals[2] - 0.15), shape = 16, size = 3)
     }
@@ -456,7 +456,7 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
       y_vals <- predict(model, newdata = new_data, type = "terms")[, "s(insp_rel_index)"]
       gratia::draw(model, select = 2, residuals = TRUE, rug = FALSE) +
         theme_minimal() +
-        labs(title = "Position in the Respiratory Cycle", x = "Index to Inspiration Start (relative)", y = "Partial CVP [mmHg]") +
+        labs(title = "Position in the Respiratory Cycle", x = "Position i respiratory cycle (relative to Inspiration Start)", y = "Partial Effect on CVP [mmHg]") +
         geom_point(aes(x = new_data$insp_rel_index[1], y = y_vals[1] + 0.02), shape = 17, size = 3) +
         geom_point(aes(x = new_data$insp_rel_index[2], y = y_vals[2] + 0.02), shape = 17, size = 3)
     }
@@ -468,8 +468,8 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
         labs(title = "Interaction between Cardiac and Respiratory Cycles", 
              subtitle = "Contour heights represent Partial CVP [mmHg]",
              fill = "Partial Effect on CVP") +
-        xlab("Index to QRS (relative)") +
-        ylab("Index to Inspiration Start (relative)") +
+        xlab("Position in cardiac cycle (relative to P wave)") +
+        ylab("Position i respiratory cycle (relative to Inspiration Start)") + 
         theme(legend.position = "right") +
         geom_label_contour(aes(z = .estimate, label = label_number(accuracy = 0.1)(..level..)),
                            bins = 10, size = 3, color = "black", fill = "white",
@@ -480,7 +480,7 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
     generate_gam_plot4 <- function(model) {
       p <- gratia::draw(model, select = 4, residuals = TRUE, rug = FALSE, partial_match = TRUE)[[1]]
       p$layers <- p$layers[!sapply(p$layers, function(layer) inherits(layer$geom, "GeomRibbon"))]
-      p + theme_minimal() + labs(title = "Effect of Time", x = "Time [s]", y = "Partial CVP [mmHg]")
+      p + theme_minimal() + labs(title = "Partial Effect of Time", x = "Time [s]", y = "Partial Effect on CVP [mmHg]")
     }
     
     # -------------------------
