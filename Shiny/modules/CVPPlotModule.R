@@ -456,7 +456,7 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
       y_vals <- predict(model, newdata = new_data, type = "terms")[, "s(insp_rel_index)"]
       gratia::draw(model, select = 2, residuals = TRUE, rug = FALSE) +
         theme_minimal() +
-        labs(title = "Position in the Respiratory Cycle", x = "Position i respiratory cycle (relative to Inspiration Start)", y = "Partial Effect on CVP [mmHg]") +
+        labs(title = "Position in the Respiratory Cycle", x = "Position in respiratory cycle (relative to Inspiration Start)", y = "Partial Effect on CVP [mmHg]") +
         geom_point(aes(x = new_data$insp_rel_index[1], y = y_vals[1] + 0.02), shape = 17, size = 3) +
         geom_point(aes(x = new_data$insp_rel_index[2], y = y_vals[2] + 0.02), shape = 17, size = 3)
     }
