@@ -469,7 +469,7 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
              subtitle = "Contour heights represent Partial CVP [mmHg]",
              fill = "Partial Effect on CVP") +
         xlab("Position in cardiac cycle (relative to P wave)") +
-        ylab("Position i respiratory cycle (relative to Inspiration Start)") + 
+        ylab("Respiratory cycle (relative to Inspiration Start)") + 
         theme(legend.position = "right") +
         geom_label_contour(aes(z = .estimate, label = label_number(accuracy = 0.1)(..level..)),
                            bins = 10, size = 3, color = "black", fill = "white",
