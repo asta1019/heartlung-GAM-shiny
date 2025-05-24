@@ -466,7 +466,7 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
       gratia::draw(model, select = 3, residuals = FALSE, rug = FALSE) +
         theme_minimal() +
         labs(title = "Interaction between Cardiac and Respiratory Cycles", 
-             subtitle = "Contour heights represent Partial CVP [mmHg]",
+             subtitle = "Contour heights represent Partial Effect on CVP [mmHg]",
              fill = "Partial Effect on CVP") +
         xlab("Position in cardiac cycle (relative to P wave)") +
         ylab("Respiratory cycle (relative to Inspiration Start)") + 
