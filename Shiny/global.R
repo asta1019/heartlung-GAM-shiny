@@ -39,6 +39,7 @@ library(transformr)                # Helper package for tweening ("in-betweens")
 
 # Install package form GitHub
 library(devtools)                                      # Needed only for development or GitHub installs
+library(usethis)                                       # Needed only for development or GitHub installs
 # install_github('legendenomgeorg/VitalDBR/VitalDBR')  # Install VitalDBR package from GitHub
 # install_github("boupetch/rsleep")                    # Install rsleep package from GitHub
 
