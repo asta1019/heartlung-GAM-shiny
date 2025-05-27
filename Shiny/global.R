@@ -20,7 +20,7 @@ library(scales)                    # Provides scale transformations and custom a
 # Statistical Modeling and GAMs
 library(mgcv)                      # Fitting generalized additive models (GAMs)
 library(gratia)                    # Visualization and diagnostics for GAMs (based on mgcv)
-# library(broom)                     # Converts statistical model outputs into tidy data frames
+# library(broom)                   # Converts statistical model outputs into tidy data frames
 
 # Specialized Scientific Tools
 library(metR)                      # Tools for adding contour-labels
@@ -40,7 +40,7 @@ library(transformr)                # Helper package for tweening ("in-betweens")
 # Install package form GitHub
 library(devtools)                                      # Needed only for development or GitHub installs
 # install_github('legendenomgeorg/VitalDBR/VitalDBR')  # Install VitalDBR package from GitHub
-
+# install_github("boupetch/rsleep")                    # Install rsleep package from GitHub
 
 # Set the maximum file upload size in Shiny to 50 MB (default is 5 MB)
 options(shiny.maxRequestSize = 50 * 1024^2)
