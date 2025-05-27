@@ -4,6 +4,12 @@
 # ---------------------------------------------------------
 # Load required libraries
 # ---------------------------------------------------------
+# Install package form GitHub
+library(devtools)                                       # Needed only for development or GitHub installs
+library(usethis)                                        # Needed only for development or GitHub installs
+# install_github('legendenomgeorg/VitalDBR/VitalDBR')   # Install VitalDBR package from GitHub
+# install_github("boupetch/rsleep")                     # Install rsleep package from GitHub
+
 # Core Frameworks and UI Tools
 library(shiny)                     # Core framework for building interactive web applications in R
 library(shinydashboard)            # Layout and UI tools for dashboard-style Shiny applications
@@ -36,12 +42,6 @@ library(tidyverse)                 # Meta-package including ggplot2, dplyr, tidy
 library(magick)                    # Advanced image processing and manipulation (supports GIFs, PNGs, etc.)
 library(gifski)                    # High-quality GIF encoder used for gganimate output
 library(transformr)                # Helper package for tweening ("in-betweens") transitions in gganimate
-
-# Install package form GitHub
-library(devtools)                                      # Needed only for development or GitHub installs
-library(usethis)                                       # Needed only for development or GitHub installs
-# install_github('legendenomgeorg/VitalDBR/VitalDBR')  # Install VitalDBR package from GitHub
-# install_github("boupetch/rsleep")                    # Install rsleep package from GitHub
 
 # Set the maximum file upload size in Shiny to 50 MB (default is 5 MB)
 options(shiny.maxRequestSize = 50 * 1024^2)
