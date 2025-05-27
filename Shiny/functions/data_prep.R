@@ -80,7 +80,16 @@ process_edf_data <- function(edf_file_path) {
   
   # Read the signals with correct names
   pt_art <- readEdfSignals(pt_header, signals = "ART")
-  pt_cvp <- readEdfSignals(pt_header, signals = "CVP-1")
+  pt_cvp <- tryCatch({
+    readEdfSignals(pt_header, signals = "CVP-1")
+  }, error = function(e1) {
+    warning("CVP-1 not available, trying CVP: ", e1$message)
+    tryCatch({
+      readEdfSignals(pt_header, signals = "CVP")
+    }, error = function(e2) {
+      stop("Failed to load CVP-1 and CVP: ", e2$message)
+    })
+  })
   pt_ecg <- tryCatch({
     readEdfSignals(pt_header, signals = "ECG_II")
   }, error = function(e1) {
