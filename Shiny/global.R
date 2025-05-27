@@ -37,6 +37,8 @@ library(VitalDBR)                  # Import and analyze vital sign data from the
 # Data Tables and Manipulation
 library(DT)                        # Library for interactive tables (used in cleaning modules)
 library(tidyverse)                 # Meta-package including ggplot2, dplyr, tidyr, readr, etc.
+library(assertthat)
+library(RcppRoll)
 
 # Animation and Image Tools
 library(magick)                    # Advanced image processing and manipulation (supports GIFs, PNGs, etc.)
