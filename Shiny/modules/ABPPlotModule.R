@@ -50,6 +50,9 @@ abpGAMPlotModuleUI <- function(id) {
                  ),
                  # plot
                  tags$h4("ABP Signal with Event Markers"),
+                 plotOutput(ns("abpPlotall"), height = "250px"),
+                 
+                 tags$h4("ABP Signal with Event Markers"),
                  plotOutput(ns("abpPlot"), height = "250px")
              )
       )
@@ -165,6 +168,31 @@ abpGAMPlotModuleServer <- function(id, data_in) {
       data_in()$data$sample_pp$abp
     })
     
+    # Update the time range slider
+    observeEvent(data_in(), {
+      req(data_in())
+      cvp <- data_in()$data$sample_cvp
+      abp <- data_in()$data$sample_pp$abp
+      
+      min_time <- round(min(abp$time, na.rm = TRUE))
+      max_time <- round(max(abp$time, na.rm = TRUE))
+      
+      if (!is.null(cvp$fluid_start) && !is.na(cvp$fluid_start[1])) {
+        min_fluid <- round(cvp$fluid_start - 30)
+        max_fluid <- round(cvp$fluid_start)
+        updateSliderInput(session, "plots_time_range",
+                          min = min_time,
+                          max = max_time,
+                          value = c(min_fluid, max_fluid))
+      } else {
+        updateSliderInput(session, "plots_time_range",
+                          min = min_time,
+                          max = max_time,
+                          value = c(min_time, max_time))
+      }
+    })
+    
+    
     # Update the time range slider whenever new data is loaded
     observeEvent(data_in(), {
       abp <- data_in()$data$sample_pp$abp
@@ -223,6 +251,81 @@ abpGAMPlotModuleServer <- function(id, data_in) {
     # PLOTTING FUNCTIONS
     # -------------------------
     
+    generate_abp_plot_all <- function(data, time_range) {
+      
+      p <- ggplot(data, aes(time, ABP))
+
+      insp_points <- data_in()$data$sample_cvp$insp_start
+      qrs_points <- data_in()$data$sample_cvp$qrs
+      
+      fluid_start <- data_in()$data$sample_cvp$fluid_start
+      fluid_end <- data_in()$data$sample_cvp$fluid_end
+      
+      abp_range <- range(data_in()$ABP, na.rm = TRUE)
+      
+      plot_layers <- list()
+      
+      has_intervention <- !is.null(fluid_start) && !is.null(fluid_end) &&
+        !anyNA(fluid_start) && !anyNA(fluid_end)
+      
+      # Highlight intervention period
+      if (has_intervention) {
+        intervention_times <- data.frame(
+          xmin = fluid_start,
+          xmax = fluid_end,
+          ymin = min(data_in()$ABP, na.rm = TRUE),
+          ymax = max(data_in()$ABP, na.rm = TRUE)
+        )
+      }
+      
+      if (has_intervention) {
+        plot_layers <- append(plot_layers, list(
+          geom_rect(data = intervention_times,
+                    aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = "Intervention"),
+                    alpha = 0.6, inherit.aes = FALSE)
+          
+        ))
+      }
+      
+      time_rect <- data.frame(
+        xmin = time_range[1],
+        xmax = time_range[2],
+        ymin = abp_range[1],
+        ymax = abp_range[2]
+      )
+      
+      # Add signal line, inspiration and QRS markers, etc.
+      plot_layers <- append(plot_layers, list(
+        
+        geom_rect(data = time_rect,
+                  aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
+                  fill = "dodgerblue2", alpha = 0.4, inherit.aes = FALSE),
+        
+        geom_line(), 
+        
+        labs(title = "Observed ABP Signal"), 
+        ylab("ABP [mmHg]"), 
+        xlab("Time [s]"), 
+        geom_point(data = insp_points, aes(x = time, y = min(data$ABP) - 8, shape = "Inspiration start"),
+                   size = 2, color = "black"), 
+        geom_point(data = qrs_points, aes(x = time, y = max(data$ABP) + 10, shape = "QRS complex"),
+                   size = 2, color = "black"),
+        scale_shape_manual(name = " ", values = c("Inspiration start" = 17, "QRS complex" = 16)),
+        theme_minimal(),
+        scale_fill_manual(name = " ", values = c("Intervention" = "lightblue")),
+        ylim(min(data$ABP) - 15, max(data$ABP) + 15),
+        theme(legend.position = "bottom", legend.key = element_blank()),
+        theme(legend.position = "bottom", legend.key = element_blank())
+      ))
+      
+      # Apply all plot layers
+      for (layer in plot_layers) {
+        p <- p + layer
+      }
+      
+      return(p)
+    }
+    
     # Plot observed ABP data with annotations for events
     generate_abp_plot <- function(data, time_range) {
       filtered_data <- data %>%
@@ -237,33 +340,9 @@ abpGAMPlotModuleServer <- function(id, data_in) {
       fluid_start <- data_in()$data$sample_cvp$fluid_start
       fluid_end <- data_in()$data$sample_cvp$fluid_end
       
-      has_intervention <- !is.null(fluid_start) && !is.null(fluid_end) &&
-        !anyNA(fluid_start) && !anyNA(fluid_end)
-      
-      cvp_range <- range(filtered_data$CVP, na.rm = TRUE)
-      
-      # Highlight intervention period
-      if (has_intervention) {
-        intervention_times <- data.frame(
-          xmin = fluid_start,
-          xmax = fluid_end,
-          ymin = min(filtered_data$ABP, na.rm = TRUE),
-          ymax = max(filtered_data$ABP, na.rm = TRUE)
-        )
-      }
-      
       p <- ggplot(filtered_data, aes(time, ABP))
       
       plot_layers <- list()
-      
-      if (has_intervention) {
-        plot_layers <- append(plot_layers, list(
-          geom_rect(data = intervention_times,
-                    aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = "Intervention"),
-                    alpha = 0.6, inherit.aes = FALSE)
-          
-        ))
-      }
       
       # Add signal line, inspiration and QRS markers, etc.
       plot_layers <- append(plot_layers, list(
@@ -350,11 +429,10 @@ abpGAMPlotModuleServer <- function(id, data_in) {
     # RENDER PLOTS
     # ------------------------- 
     
-    output$abpPlot <- renderPlot({
+    output$abpPlotall <- renderPlot({
       shinyjs::show("loading")
-      req(abp_data(), input$plots_time_range)
-      time_range <- input$plots_time_range
-      abp_plot <- generate_abp_plot(abp_data(), time_range)
+      req(abp_data_unfiltered())
+      abp_plot <- generate_abp_plot_all(abp_data_unfiltered(), input$plots_time_range)
       shinyjs::hide("loading")
       abp_plot
     })
