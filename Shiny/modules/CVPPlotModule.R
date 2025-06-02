@@ -278,6 +278,22 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
             discrete = set_discrete,
             nthreads = set_nthreads
           )
+          
+          # Beregn og gem min, max og differens for smooth effekt af insp_rel_index
+          insp_vals <- seq(0, 1, length.out = 200)
+          new_data <- data.frame(
+            P_wave_index = mean(cvp_data()$P_wave_index, na.rm = TRUE),
+            insp_rel_index = insp_vals,
+            time = mean(cvp_data()$time, na.rm = TRUE)
+          )
+          smooth_vals <- predict(model, newdata = new_data, type = "terms")
+          delta_insp <- range(smooth_vals[, "s(insp_rel_index)"], na.rm = TRUE)
+          diff_insp <- round(diff(delta_insp), 2)
+          min_val <- round(delta_insp[1], 2)
+          max_val <- round(delta_insp[2], 2)
+          
+          model$insp_summary <- list(min = min_val, max = max_val, diff = diff_insp)
+          
           return(model)
         }, error = function(e) {
           showNotification(paste("GAM fitting failed:", e$message), type = "error")
@@ -454,12 +470,32 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
         time = mean(filtered$time, na.rm = TRUE)
       )
       y_vals <- predict(model, newdata = new_data, type = "terms")[, "s(insp_rel_index)"]
-      gratia::draw(model, select = 2, residuals = TRUE, rug = FALSE) +
+      
+      base_plot <- gratia::draw(model, select = 2, residuals = TRUE, rug = FALSE) +
         theme_minimal() +
-        labs(title = "Position in the Respiratory Cycle", x = "Position in respiratory cycle (relative to Inspiration Start)", y = "Partial Effect on CVP [mmHg]") +
+        labs(
+          title = "Position in the Respiratory Cycle",
+          x = "Position in respiratory cycle (relative to Inspiration Start)",
+          y = "Partial Effect on CVP [mmHg]"
+        ) +
         geom_point(aes(x = new_data$insp_rel_index[1], y = y_vals[1] + 0.02), shape = 17, size = 3) +
         geom_point(aes(x = new_data$insp_rel_index[2], y = y_vals[2] + 0.02), shape = 17, size = 3)
+      
+      vals <- model$insp_summary
+      if (!is.null(vals)) {
+        label_text <- paste0("Min: ", vals$min, " mmHg\n",
+                             "Max: ", vals$max, " mmHg\n",
+                             "Diff: ", vals$diff, " mmHg")
+        
+        base_plot <- base_plot +
+          annotate("label", x = Inf, y = Inf, hjust = 1, vjust = 1,
+                   label = label_text,
+                   size = 3.5, fontface = "italic", fill = "white", color = "black")
+      }
+      
+      return(base_plot)
     }
+    
     
     # Plot 3: Interaction effect between cardiac and respiratory cycles
     generate_gam_plot3 <- function(model) {
