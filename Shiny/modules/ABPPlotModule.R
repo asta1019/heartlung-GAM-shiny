@@ -194,13 +194,13 @@ abpGAMPlotModuleServer <- function(id, data_in) {
     
     
     # Update the time range slider whenever new data is loaded
-    observeEvent(data_in(), {
-      abp <- data_in()$data$sample_pp$abp
-      updateSliderInput(session, "plots_time_range", 
-                        min = round(min(abp$time, na.rm = TRUE)), 
-                        max = round(max(abp$time, na.rm = TRUE)), 
-                        value = round(range(abp$time, na.rm = TRUE)))
-    })
+    #observeEvent(data_in(), {
+    #  abp <- data_in()$data$sample_pp$abp
+    #  updateSliderInput(session, "plots_time_range", 
+    #                    min = round(min(abp$time, na.rm = TRUE)), 
+    #                    max = round(max(abp$time, na.rm = TRUE)), 
+    #                    value = round(range(abp$time, na.rm = TRUE)))
+    #})
     
     # Reactive expression to adjust ABP data using inspiration and QRS markers
     abp_data_unfiltered <- reactive({
@@ -261,7 +261,7 @@ abpGAMPlotModuleServer <- function(id, data_in) {
       fluid_start <- data_in()$data$sample_cvp$fluid_start
       fluid_end <- data_in()$data$sample_cvp$fluid_end
       
-      abp_range <- range(data_in()$ABP, na.rm = TRUE)
+      abp_range <- range(data_in()$data$sample_pp$abp$ABP, na.rm = TRUE)
       
       plot_layers <- list()
       
@@ -306,9 +306,9 @@ abpGAMPlotModuleServer <- function(id, data_in) {
         labs(title = "Observed ABP Signal"), 
         ylab("ABP [mmHg]"), 
         xlab("Time [s]"), 
-        geom_point(data = insp_points, aes(x = time, y = min(data$ABP) - 8, shape = "Inspiration start"),
+        geom_point(data = insp_points, aes(x = time, y = min(data$ABP) - 0.6, shape = "Inspiration start"),
                    size = 2, color = "black"), 
-        geom_point(data = qrs_points, aes(x = time, y = max(data$ABP) + 10, shape = "QRS complex"),
+        geom_point(data = qrs_points, aes(x = time, y = max(data$ABP) + 1, shape = "QRS complex"),
                    size = 2, color = "black"),
         scale_shape_manual(name = " ", values = c("Inspiration start" = 17, "QRS complex" = 16)),
         theme_minimal(),
@@ -350,9 +350,9 @@ abpGAMPlotModuleServer <- function(id, data_in) {
         labs(title = "Observed ABP Signal"), 
         ylab("ABP [mmHg]"), 
         xlab("Time [s]"), 
-        geom_point(data = insp_points, aes(x = time, y = min(filtered_data$ABP) - 8, shape = "Inspiration start"),
+        geom_point(data = insp_points, aes(x = time, y = min(filtered_data$ABP) - 0.6, shape = "Inspiration start"),
                    size = 2, color = "black"), 
-        geom_point(data = qrs_points, aes(x = time, y = max(filtered_data$ABP) + 10, shape = "QRS complex"),
+        geom_point(data = qrs_points, aes(x = time, y = max(filtered_data$ABP) + 1.0, shape = "QRS complex"),
                    size = 2, color = "black"),
         scale_shape_manual(name = " ", values = c("Inspiration start" = 17, "QRS complex" = 16)),
         theme_minimal(),
