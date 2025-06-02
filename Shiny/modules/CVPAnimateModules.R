@@ -348,14 +348,18 @@ cvpAnimationServer <- function(id, data_in) {
             y = "CVP [mmHg]"
           ) +
           ggtitle(
-            label = "Relative position in the respiratory cycle: {sprintf('%.2f', as.numeric(closest_state))}",
-            subtitle = "Min CVP at this resp. phase: {sprintf('%.2f', min_cvp_per_insp$min_CVP[which.min(abs(min_cvp_per_insp$insp_rel_index - as.numeric(closest_state)))])}\nThe CVP waveform for a heartbeat and how it depends on/changes with the respiratory \n cycle"
+            label = NULL,  # Undgå at bruge title – det overlapper subtitle
+            subtitle = paste0(
+              "Relative position in the respiratory cycle: {sprintf('%.2f', as.numeric(closest_state))}\n",
+              "Min CVP at this resp. phase: {sprintf('%.2f', min_cvp_per_insp$min_CVP[which.min(abs(min_cvp_per_insp$insp_rel_index - as.numeric(closest_state)))])}\n",
+              "The CVP waveform for a heartbeat and how it depends on/changes with the \nrespiratory cycle"
+            )
           ) +
           theme_grey(base_size = 12) +
           theme(
-            plot.title = element_text(size = 14, hjust = 0, lineheight = 1.2),
-            plot.subtitle = element_text(size = 11, hjust = 0, lineheight = 1, margin = margin(b = 6)),
-            plot.margin = unit(c(0.5, 0.2, 0.2, 0.2), "cm")
+            plot.title = element_blank(),  # Sikrer at der ikke er plads reserveret til title
+            plot.subtitle = element_text(size = 11, hjust = 0, lineheight = 1.2, margin = margin(t = 6, b = 6)),
+            plot.margin = unit(c(1.8, 0.4, 0.4, 0.4), "cm")
           ) +
           transition_states(insp_rel_index, transition_length = 0.0005, state_length = 1)
         
@@ -378,7 +382,7 @@ cvpAnimationServer <- function(id, data_in) {
           theme(
             plot.title = element_blank(),
             plot.subtitle = element_text(size = 11, hjust = 0, lineheight = 1),
-            plot.margin = unit(c(1.6, 0.2, 0.2, 0.2), "cm")
+            plot.margin = unit(c(2, 0.2, 0.2, 0.2), "cm")
           ) +
           transition_states(state, transition_length = 0.0005)
         
