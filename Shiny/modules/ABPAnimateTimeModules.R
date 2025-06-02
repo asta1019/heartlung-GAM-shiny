@@ -107,8 +107,8 @@ abpAnimationTimeServer <- function(id, data_in) {
     })
     
     # Download buttons
-    shinyjs::disable("download_gam_mp4")
-    shinyjs::disable("download_gam_chrome")
+    shinyjs::disable("download_mp4")
+    shinyjs::disable("download_chrome")
     
     # Configuration flags for GAM fitting
     set_discrete <- FALSE    # Use discrete BAM for speed
