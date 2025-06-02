@@ -354,7 +354,7 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
         
         # Plot inspiration start points below CVP curve
         geom_point(data = insp_points,
-                   aes(x = time, y = min(filtered_data$CVP, na.rm = TRUE) - 0.6, shape = "Inspiration start"),
+                   aes(x = time, y = min(filtered_data$CVP, na.rm = TRUE) - 2, shape = "Inspiration start"),
                    size = 2, color = "black"),
         
         # Plot QRS complex points above CVP curve
@@ -419,7 +419,7 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
         labs(title = "Observed CVP Signal", y = "CVP [mmHg]", x = "Time [s]") +
         geom_hline(yintercept = min(filtered_data$CVP, na.rm = TRUE) - 1, color = "black") +
         geom_point(data = insp_points,
-                   aes(x = time, y = min(filtered_data$CVP, na.rm = TRUE) - 0.6, shape = "Inspiration start"),
+                   aes(x = time, y = min(filtered_data$CVP, na.rm = TRUE) - 2, shape = "Inspiration start"),
                    size = 2, color = "black") +
         geom_point(data = qrs_points,
                    aes(x = time, y = max(filtered_data$CVP, na.rm = TRUE) + 1, shape = "QRS complex"),
