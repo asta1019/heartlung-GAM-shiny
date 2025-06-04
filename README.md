@@ -3,6 +3,6 @@ This project was developed as part of the Data Project course at Aarhus Universi
 
 The aim of this project is to build a Shiny application to analyze and visualize heart-lung interactions using Generalized Additive Models (GAMs). The tool is intended for clinicians and researchers interested in exploring cardiopulmonary physiology in mechanically ventilated patients. We focus on making pre-developed GAMs and visualizations available to users without programming experience. The final product is an interactive Shiny app that enables users to easily import, process, and visualize patient data. The app supports flexible plotting options and is designed as a tool for hypothesis testing and physiological research.
 
-The Shiny application and relevant scripts can be found in the folder Final Shiny. A modified version of the app for quick demonstration is available in [Demo Version](https://oq5g7c-asta-bach.shinyapps.io/ShinyWebAppHeartLungInteraction/). Example data can be found in the Data folder.
+The Shiny application and relevant scripts can be found in the folder Final Shiny. A modified version of the app for quick demonstration is available in [Demo Version](https://oq5g7c-asta-bach.shinyapps.io/ShinyWebAppHeartLungInteraction/). Example data can be found in the Data folder. Note that the application is build on R version R.4.4.2.
 
-Created by Christine Grønfeldt Nielsen, Nicoline Nygaard Slyk and Asta Bomholt Bach, with guidance from Simon Tilma Vistisen and Johannes Enevoldsen
+Created by Christine Grønfeldt Nielsen, Nicoline Nygaard Slyk and Asta Bomholt Bach, with guidance from Simon Tilma Vistisen and Johannes Enevoldsen.
