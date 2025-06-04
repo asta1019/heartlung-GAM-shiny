@@ -25,6 +25,7 @@ DataUploadUI <- function(id) {
       tags$b("Please note:")
     ),
     tags$ul(
+      tags$li("The uploaded data must include three specific signals: Arterial Blood Pressure, Central Venous Pressure, and Electrocardiogram."),
       tags$li("Large files may cause the application to crash. To ensure smooth performance, uploaded data should not exceed approximately 20 minutes of monitoring time."),
       tags$li("If you have already loaded a file and wish to upload a new one, please refresh the page before selecting the new file. This will reset the data and ensure that the subsequent results are accurate.")
     ),
