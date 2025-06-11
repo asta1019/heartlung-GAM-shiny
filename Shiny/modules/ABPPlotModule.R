@@ -249,6 +249,7 @@ abpGAMPlotModuleServer <- function(id, data_in) {
       })
     })
     
+    
     # -------------------------
     # PLOTTING FUNCTIONS
     # -------------------------
@@ -298,37 +299,27 @@ abpGAMPlotModuleServer <- function(id, data_in) {
                     alpha = 0.6, inherit.aes = FALSE)
         ))
       }
-      
       plot_layers <- append(plot_layers, list(
         geom_rect(data = time_rect,
                   aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                   fill = "dodgerblue2", alpha = 0.4, inherit.aes = FALSE),
-        
         geom_line(),
-        
         geom_point(data = insp_points,
                    aes(x = time, y = min(filtered_data$ABP, na.rm = TRUE) - 8, shape = "Inspiration start"),
                    size = 2, color = "black"),
-        
         geom_point(data = qrs_points,
                    aes(x = time, y = max(filtered_data$ABP, na.rm = TRUE) + 10, shape = "QRS complex"),
                    size = 2, color = "black"),
-        
         scale_shape_manual(name = " ", values = c("Inspiration start" = 17, "QRS complex" = 16)),
-        
         scale_fill_manual(name = " ", values = c("Intervention" = "lightblue")),
-        
         labs(title = "Observed ABP Signal (Static)", y = "ABP [mmHg]", x = "Time [s]"),
-        
         theme_minimal(),
-        
         theme(legend.position = "bottom", legend.key = element_blank())
       ))
       
       for (layer in plot_layers) {
         p <- p + layer
       }
-      
       return(p)
     }
     

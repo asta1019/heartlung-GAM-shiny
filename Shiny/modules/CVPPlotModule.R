@@ -356,7 +356,6 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
           geom_rect(data = intervention_times,
                     aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax, fill = "Intervention"),
                     alpha = 0.6, inherit.aes = FALSE)
-          
         ))
       }
       
@@ -365,27 +364,19 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
         geom_rect(data = time_rect,
                   aes(xmin = xmin, xmax = xmax, ymin = ymin, ymax = ymax),
                   fill = "dodgerblue2", alpha = 0.4, inherit.aes = FALSE),
-        
         geom_line(),
-        
         # Plot inspiration start points below CVP curve
         geom_point(data = insp_points,
                    aes(x = time, y = min(filtered_data$CVP, na.rm = TRUE) - 2, shape = "Inspiration start"),
                    size = 2, color = "black"),
-        
         # Plot QRS complex points above CVP curve
         geom_point(data = qrs_points,
                    aes(x = time, y = max(filtered_data$CVP, na.rm = TRUE) + 1, shape = "QRS complex"),
                    size = 2, color = "black"),
-        
         scale_shape_manual(name = " ", values = c("Inspiration start" = 17, "QRS complex" = 16)),
-        
         scale_fill_manual(name = " ", values = c("Intervention" = "lightblue")),
-        
         labs(title = "Observed CVP Signal (Static)", y = "CVP [mmHg]", x = "Time [s]"),
-        
         theme_minimal(),
-        
         theme(legend.position = "bottom", legend.key = element_blank())
       ))
       
@@ -393,9 +384,7 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
       for (layer in plot_layers) {
         p <- p + layer
       }
-      
       return(p)
-      
     }
     
     # Function to generate ECG plot for given time range
@@ -486,13 +475,11 @@ cvpGAMPlotModuleServer <- function(id, data_in) {
         label_text <- paste0("Min: ", vals$min, " mmHg\n",
                              "Max: ", vals$max, " mmHg\n",
                              "Diff: ", vals$diff, " mmHg")
-        
         base_plot <- base_plot +
           annotate("label", x = Inf, y = Inf, hjust = 1, vjust = 1,
                    label = label_text,
                    size = 3.5, fontface = "italic", fill = "white", color = "black")
       }
-      
       return(base_plot)
     }
     

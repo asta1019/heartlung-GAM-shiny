@@ -79,6 +79,7 @@ adjust_cvp_insp_index <- function(cvp, qrs_times, insp_start_times, PQ_interval 
   # Adjust indexing relative to the new cycle reference point
   cvp_with_index %>%
     mutate(
+      insp_index = (time - new_start_time) %% insp_cycle_len,        # tide siden aktuelle cyklus startede
       insp_rel_index = (time - new_start_time) / insp_cycle_len,    # Normalize time within respiratory cycle
       insp_rel_index = insp_rel_index %% 1,                         # Wrap around to keep index between 0 and 1
       insp_n = floor((time - new_start_time) / insp_cycle_len) + 1  # Recalculate inspiration cycle number
@@ -110,6 +111,7 @@ adjust_abp_insp_index <- function(abp, cvp, qrs_times, insp_start_times, PQ_inte
   # Adjust ABP data using the new reference time
   abp_with_index %>%
     mutate(
+      insp_index = (time - new_start_time) %% insp_cycle_len,
       insp_rel_index = (time - new_start_time) / insp_cycle_len,    # Normalize time within respiratory cycle
       insp_rel_index = insp_rel_index %% 1,                         # Wrap around to keep index between 0 and 1
       insp_n = floor((time - new_start_time) / insp_cycle_len) + 1  # Recalculate inspiration cycle number
